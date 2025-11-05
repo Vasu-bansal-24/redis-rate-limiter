@@ -1,0 +1,20 @@
+{
+  "services": [
+    {
+      "type": "web",
+      "name": "redis-rate-limiter",
+      "env": "node",
+      "region": "oregon",
+      "plan": "free",
+      "buildCommand": "npm install && cd client && npm install && npm run build",
+      "startCommand": "npm start",
+      "healthCheckPath": "/api/resource",
+      "envVars": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        }
+      ]
+    }
+  ]
+}
