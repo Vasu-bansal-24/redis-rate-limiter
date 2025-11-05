@@ -7,10 +7,10 @@
     "start": "node src/server.js",
     "dev": "nodemon --watch src --exec node src/server.js",
     "lint": "eslint . --ext .js",
-    "build": "npm install && cd client && npm install && npm run build",
+    "build": "npm install && cd client && npm install --include=dev && npm run build",
     "install-all": "npm install && cd client && npm install",
     "heroku-postbuild": "npm run build",
-    "render-build": "npm install && cd client && npm install && npm run build"
+    "render-build": "npm install && cd client && npm install --include=dev && npm run build"
   },
   "dependencies": {
     "cors": "^2.8.5",

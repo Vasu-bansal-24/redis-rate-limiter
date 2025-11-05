@@ -6,7 +6,7 @@
       "env": "node",
       "region": "oregon",
       "plan": "free",
-      "buildCommand": "npm install && cd client && npm install && npm run build",
+      "buildCommand": "npm install && cd client && npm install --include=dev && npm run build",
       "startCommand": "npm start",
       "healthCheckPath": "/api/resource",
       "envVars": [
