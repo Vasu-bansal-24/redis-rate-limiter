@@ -1,0 +1,35 @@
+{
+  "name": "redis-rate-limiter-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src --exec node src/server.js",
+    "lint": "eslint . --ext .js",
+    "build": "cd client && npm install && npm run build",
+    "install-all": "npm install && cd client && npm install",
+    "heroku-postbuild": "npm run build"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.2.1",
+    "firebase": "^12.5.0",
+    "firebase-admin": "^13.5.0",
+    "helmet": "^7.0.0",
+    "ioredis": "^5.3.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^5.7.0",
+    "mongoose": "^8.19.2",
+    "rate-limit-redis": "^4.2.3",
+    "redis": "^5.9.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "nodemon": "^2.0.22"
+  }
+}
