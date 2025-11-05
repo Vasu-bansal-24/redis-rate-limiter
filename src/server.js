@@ -4,6 +4,7 @@ import crypto from "crypto";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import mongoose from "mongoose";
 import connectMongo from "./db.js";
 import ThrottleEvent from "./models/ThrottleEvent.js";
 
@@ -59,15 +60,21 @@ const createRateLimiter = (capacity, refillRate) => {
         const resetTime = Math.ceil(now / 1000) + retryAfter; // Unix timestamp
 
         // Log throttle event to MongoDB (non-blocking)
-        try {
-          await ThrottleEvent.create({
-            route,
-            userId,
-            ip: req.ip,
-            retryAfter,
-          });
-        } catch (mongoErr) {
-          console.warn("⚠️ Failed to log throttle event to MongoDB:", mongoErr.message);
+        // Only attempt if MongoDB is connected
+        if (mongoose.connection.readyState === 1) {
+          try {
+            await ThrottleEvent.create({
+              route,
+              userId,
+              ip: req.ip,
+              retryAfter,
+            });
+            console.log(`📝 Throttle event logged for ${route}`);
+          } catch (mongoErr) {
+            console.warn("⚠️ Failed to log throttle event to MongoDB:", mongoErr.message);
+          }
+        } else {
+          console.warn("⚠️ MongoDB not connected, skipping throttle event logging");
         }
         
         res.set({
