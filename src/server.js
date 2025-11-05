@@ -58,13 +58,17 @@ const createRateLimiter = (capacity, refillRate) => {
         const retryAfter = Math.ceil((1 - tokens) / refillRate);
         const resetTime = Math.ceil(now / 1000) + retryAfter; // Unix timestamp
 
-        // Log throttle event to MongoDB
-        await ThrottleEvent.create({
-          route,
-          userId,
-          ip: req.ip,
-          retryAfter,
-        });
+        // Log throttle event to MongoDB (non-blocking)
+        try {
+          await ThrottleEvent.create({
+            route,
+            userId,
+            ip: req.ip,
+            retryAfter,
+          });
+        } catch (mongoErr) {
+          console.warn("⚠️ Failed to log throttle event to MongoDB:", mongoErr.message);
+        }
         
         res.set({
           "X-RateLimit-Limit": capacity.toString(),
