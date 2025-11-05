@@ -7,9 +7,10 @@
     "start": "node src/server.js",
     "dev": "nodemon --watch src --exec node src/server.js",
     "lint": "eslint . --ext .js",
-    "build": "cd client && npm install && npm run build",
+    "build": "npm install && cd client && npm install && npm run build",
     "install-all": "npm install && cd client && npm install",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "render-build": "npm install && cd client && npm install && npm run build"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -31,5 +32,9 @@
   "devDependencies": {
     "eslint": "^8.50.0",
     "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }
